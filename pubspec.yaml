@@ -1,4 +1,4 @@
-name: tarbar_with_pageview
+name: ng169
 description: A new Flutter project.
 
 # The following defines the version and build number for your application.
@@ -20,11 +20,16 @@ dependencies:
   flutter:
     
     sdk: flutter
-
+    
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
-
+  cupertino_icons: any
+  font_awesome_flutter: any
+  shared_preferences: any
+  sqflite: any
+  dio: any
+  barcode_scan: ^0.0.3
+  # dio:any
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -41,8 +46,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-      - assets/lang/cn.json
-      - assets/lang/en.json
+      - assets/
+      - assets/lang/
+      - assets/images/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #  - images/a_dot_burr.jpeg

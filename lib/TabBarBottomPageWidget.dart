@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tarbar_with_pageview/GSYTabBarWidget.dart';
-import 'package:tarbar_with_pageview/TabBarPageFirst.dart';
-import 'package:tarbar_with_pageview/TabBarPageSecond.dart';
-import 'package:tarbar_with_pageview/TabBarPageThree.dart';
+import 'package:ng169/GSYTabBarWidget.dart';
+import 'package:ng169/TabBarPageFirst.dart';
+import 'package:ng169/TabBarPageSecond.dart';
+import 'package:ng169/TabBarPageThree.dart';
 
 
 
