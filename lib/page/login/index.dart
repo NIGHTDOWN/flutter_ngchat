@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:ng169/style/sign_in_page.dart';
 import 'package:ng169/style/sign_up_page.dart';
 import 'package:ng169/style/theme.dart' as indextheme;
 import 'package:ng169/tool/brige.dart';
+import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/lang.dart';
-
+//登入页面
 class Index extends StatefulWidget {
   @override
   _Index createState() => new _Index();
@@ -54,18 +57,24 @@ class _Index extends State<Index> {
 
   @override
   Widget build(BuildContext context) {
+    
     initpage();
     loadbox();
+    
     Column columns = new Column(mainAxisSize: MainAxisSize.max, children: page);
+    // return columns;
     Map fun = new Map();
     fun['loadding'] = this.loadding;
     fun['hideing'] = this.hideing;
+
     // d(load);
     // d(this.load);
     // d(fun['load']);
+    
     BoxDecoration bg = new BoxDecoration(
       gradient: indextheme.Theme.primaryGradient, //背景色
     ); //背景色
+    
     return new Scaffold(
         /**
            * SafeArea，让内容显示在安全的可见区域
@@ -93,7 +102,7 @@ class _Index extends State<Index> {
 
   //载入页面元素
   void initpage() {
-    // d(MediaQuery.of(context));
+    
     BorderRadius _borderRadius = BorderRadius.all(Radius.circular(25)); //圆角弧度
     centerbtn = <Widget>[
       Expanded(
@@ -158,6 +167,7 @@ class _Index extends State<Index> {
               ))),
     ];
 
+
     page = <Widget>[
       new SizedBox(
         height: 35, // new Padding(padding: EdgeInsets.only(top: 35)),上边距35
@@ -199,5 +209,6 @@ class _Index extends State<Index> {
         ),
       ),
     ];
+ 
   }
 }

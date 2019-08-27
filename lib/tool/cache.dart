@@ -15,17 +15,17 @@ class NgCache {
     String data = cache.get(key);
 
     if (data == '') {
-      return false;
+      return null;
     }
     var js;
     try {
       js = jsonDecode(data);
     } catch (e) {
-      return false;
+      return null;
     }
 
     if (js == '') {
-      return false;
+      return null;
     }
     var time = (js['time']);
     if (time <= 0) {

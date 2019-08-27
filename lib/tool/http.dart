@@ -4,15 +4,18 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ng169/conf/conf.dart';
+import 'package:ng169/page/login/index.dart';
+import 'package:ng169/tool/url.dart';
 
 import 'function.dart';
+import 'global.dart';
 import 'lang.dart';
 
 Future<String> http(String url,
-    [Map<String, String> datas, Map<String, String> header]) async {
+    [Map<String, dynamic> datas, Map<String, dynamic> header]) async {
   Dio dio = Dio();
   //设置代理
-
+ 
   dio.options.baseUrl = apiurl;
   //设置连接超时时间
   dio.options.connectTimeout = 10000;
@@ -22,7 +25,7 @@ Future<String> http(String url,
   // dio.options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
   dio.options.contentType =
       ContentType.parse("application/x-www-form-urlencoded");
-  if (header != null) {
+  if ( null!= header) {
     dio.options.headers = header;
   }
 
@@ -45,7 +48,6 @@ Future<String> http(String url,
     // 当请求失败时做一些预处理
     return DioError; //continue
   };
-
   try {
     //以表单的形式设置请求参数
     // Map<String, String> queryParameters = {'format': '2', 'key': '939e592487c33b12c509f757500888b5', 'lon': '116.39277', 'lat': '39.933748'};
@@ -74,7 +76,9 @@ dynamic gedata(BuildContext content, String responseData) {
     return js['result'];
   } else if (js['code'] < 0) {
     //这里清空缓存，重新进入登入页面
+     g('cache').del('user');
     show(content, js['msg']);
+    // gourl(content, new Index());
     return false;
   } else {
     show(content, js['msg']);

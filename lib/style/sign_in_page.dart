@@ -319,7 +319,7 @@ class _SignInPageState extends State<SignInPage> {
                 username.clear();
                 pwd.clear();
                 cache.set('user', gets, '-1');
-                d(gets);
+                
                 gourl(context, new HomePage());
               }
 

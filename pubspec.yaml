@@ -26,9 +26,18 @@ dependencies:
   cupertino_icons: any
   font_awesome_flutter: any
   shared_preferences: any
+  #sql
   sqflite: any
+  #http
   dio: any
+  #二维码
   barcode_scan: ^0.0.3
+  common_utils: any
+  #权限
+  #permission_handler: ^1.0.0
+  #工具类库
+  
+
   # dio:any
 dev_dependencies:
   flutter_test:

@@ -1,22 +1,84 @@
 import 'package:flutter/material.dart';
+import 'package:ng169/tool/function.dart';
+import 'package:ng169/tool/global.dart';
+import 'package:ng169/tool/http.dart';
 
 class ChatPage extends StatefulWidget {
+  var chatid;
+
+  ChatPage({Key key, this.chatid}) : super(key: key) {
+    //super.key=key;
+    // Parent();
+  }
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _ChatPageState();
+
+    return _ChatPageState(chatid: chatid);
   }
 }
 
 class _ChatPageState extends State<ChatPage> {
-  String nikeName = 'Ai卓玛';
-  String inputValue = 'ces';
+  String nikeName = '';
+  String inputValue = '';
+  var db, cache, uid;
+  var chatid;
+  var headimg;
+  var newid;
+  //var start;
   TextEditingController textEditingController = new TextEditingController();
   List<ChatItem> items = new List();
+  List msglist;
+  _ChatPageState({Key key, this.chatid}) {
+    db = g('db');
+    cache = g('cache');
+    uid = g('cache').get('user')['uid'];
+    var where = {'uid': uid.toString(), 'chatid': chatid.toString()};
+    db.where(where);
+       //db.getone('msglist', gets);
+    loadmsg();
+    db.getone('chatlist').then((data) {
+      this.nikeName = null != data['name'] ? data['name'] : data['username'];
+      this.nikeName = this.nikeName.trim();
+      this.headimg = data['headimg'];
+      this.setState(() {});
+    });
+    //d(uid);
+  }
+  //加载消息
+  loadmsg() {
+    //网络加载
+    var post = {'chatid': this.chatid};
+    http('chat/lastmsgid', post, gethead()).then((data) async {
+      //d(data);
+      var gets = gedata(context, data);
+
+      if (null != gets['msgid']) {
+        var datadb = await db.getone('msglist', gets);
+        if (null == datadb) {
+          //取偏移量
+          db.order('msgid desc');
+          var start = await db.getone('msglist', {'chatid':this.chatid});
+          var startid = null != start ? start['msgid'] : 0;
+          var post = {'chatid': this.chatid, 'offset': startid};
+          var pulllist = await http('chat/gethistory', post, gethead());
+          var pulllist2 = gedata(context, pulllist);
+          for (var item in pulllist2) {
+            if (null == await db.getone('msglist', item)) {
+              db.insert('msglist', item);
+            }
+            //插入本地数据
+          }
+        }
+      }
+    });
+    //数据库加载
+  }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+
     return Scaffold(
         appBar: AppBar(
             title: new Text(

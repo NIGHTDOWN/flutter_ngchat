@@ -6,9 +6,9 @@ import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/lang.dart';
 import 'dart:async';
 
+import 'Chatlist.dart';
 import 'Contactpage.dart';
 import 'Findpage.dart';
-import 'Homepage.dart';
 import 'Minedpage.dart';
 
 
@@ -24,7 +24,7 @@ import 'Minedpage.dart';
 //     );
 //   }
 // }
-
+//主页
 class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
   var pageList;
 
   /// 聊天列表界面
-  var wangWangPage;
+  var chatlist;
 
   /// 通讯录界面
   var contactPage;
@@ -66,13 +66,14 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    
     _initData();
-    d(bottomTabImages);
-    return new Scaffold();
+    // d(bottomTabImages);
+    // return new Scaffold();
     return new Scaffold(
         appBar: new AppBar(
             title: new Text(
-              '微信',
+              lang('Appname'),
               style: TextStyle(color: Colors.white),
             ),
             actions: <Widget>[
@@ -187,10 +188,10 @@ class _HomePageState extends State<HomePage> {
   _getBody() {
     switch (index) {
       case 0:
-        if (wangWangPage == null) {
-          return new WangWangPage();
+        if (chatlist == null) {
+          return new Chatlist();
         }
-        return wangWangPage;
+        return chatlist;
       case 1:
         if (contactPage == null) {
           return new ContactPage();
