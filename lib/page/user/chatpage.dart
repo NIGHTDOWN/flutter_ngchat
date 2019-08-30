@@ -73,6 +73,13 @@ class _ChatPageState extends State<ChatPage> {
       }
     });
     //数据库加载
+    db.order('msgid desc');
+    db.limit('99'); //显示99条
+    msglist = await db.getall('msglist', {'chatid': this.chatid});
+    //msglist = msglist.reversed;
+    d(msglist);
+    this.setState(() {});
+    //d(msglist);
   }
 
   @override
