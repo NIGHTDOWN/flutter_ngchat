@@ -69,7 +69,7 @@ dynamic gedata(BuildContext content, String responseData) {
     js = jsonDecode(responseData);
   } catch (e) {
     show(content, lang('请求错误：1'));
-    return false;
+    return null;
   }
   if (js['code'] == 1) {
     //请求成功
@@ -79,9 +79,9 @@ dynamic gedata(BuildContext content, String responseData) {
      g('cache').del('user');
     show(content, js['msg']);
     // gourl(content, new Index());
-    return false;
+    return null;
   } else {
     show(content, js['msg']);
-    return false;
+    return null;
   }
 }

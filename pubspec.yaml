@@ -33,6 +33,9 @@ dependencies:
   #二维码
   barcode_scan: ^0.0.3
   common_utils: any
+  flutter_easyrefresh: any
+  flutter_spinkit: ^3.1.0
+  web_socket_channel: any
   #权限
   #permission_handler: ^1.0.0
   #工具类库

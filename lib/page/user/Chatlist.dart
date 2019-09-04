@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ng169/conf/conf.dart';
 import 'package:ng169/tool/function.dart';
 import 'package:ng169/tool/global.dart';
 import 'package:ng169/tool/http.dart';
 import 'package:ng169/tool/url.dart';
 import 'package:ng169/tool/commom.dart';
 import 'chatpage.dart';
-import 'package:common_utils/common_utils.dart';
 
 class Chatlist extends StatefulWidget {
   @override
@@ -22,19 +22,17 @@ class _ChatlistState extends State<Chatlist> {
   var db;
   var uid;
   _ChatlistState() {
-    
     db = g('db');
     uid = g('cache').get('user')['uid'];
     this.loadhttp().then((data) {
       this.loaddb().then((data) {
-        
         this.setState(() {}); //重新渲染
       });
     });
   }
   @override
   Widget build(BuildContext context) {
-    //d(2);
+    
     // TODO: implement build
     dynamic widget = new ListView.builder(
       itemBuilder: (context, i) {
@@ -48,12 +46,12 @@ class _ChatlistState extends State<Chatlist> {
 
   //本地加载优先
   loaddb() async {
-    db.where({'uid': uid.toString(),'lock':'0'});
+    db.where({'uid': uid.toString(), 'lock': '0'});
     db.limit('100'); //最大200条记录
     var data = await db.getall('chatlist');
+    //this.listchat = data.reversed();
     this.listchat = data;
     this.listnum = data.length;
-    
 
     return data;
   }
@@ -62,6 +60,7 @@ class _ChatlistState extends State<Chatlist> {
   loadhttp() async {
     return await http('chat/getlist', null, gethead()).then((data) async {
       List js = gedata(context, data);
+      if (null == js) return null;
       // this.listchat = js;
       // this.listnum = js.length;
       //入库
@@ -162,7 +161,6 @@ class _ChatListItemState extends State<ChatListItem> {
   String uid;
   String headimg;
   String time;
-  var defaultAvatar = 'assets/images/ww_default_avatar.png';
 
   _ChatListItemState(this.position, this.name, this.desc, this.nums,
       this.chatid, this.uid, this.headimg, this.time);
@@ -176,8 +174,7 @@ class _ChatListItemState extends State<ChatListItem> {
     if (null == head) {
       head = new Image.asset(defaultAvatar, width: 44.0, height: 44.0);
     }
-    setLocaleInfo('one', ZHTimelineInfo());
-    setLocaleInfo('two', ENTimelineInfo());
+
     //new OutlineButton();GestureDetector
     return new OutlineButton(
       padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
@@ -215,9 +212,9 @@ class _ChatListItemState extends State<ChatListItem> {
                     padding: new EdgeInsets.fromLTRB(0.0, 0.0, 15.0, 0.0),
                     child: new Text(
                       // TimelineUtil.format(1566785551),
-
-                      TimelineUtil.format(int.parse(this.time + '000'),
-                          locale: ('one')),
+                      gettime(this.time),
+                      // TimelineUtil.format(int.parse(this.time + '000'),
+                      //     locale: ('one')),
                       style: TextStyle(
                         fontSize: 10.0,
                         color: const Color(0xffaaaaaa),
@@ -246,5 +243,3 @@ class _ChatListItemState extends State<ChatListItem> {
     }
   }
 }
-
-

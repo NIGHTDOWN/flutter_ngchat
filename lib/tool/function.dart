@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ng169/tool/toast.dart';
+
 //import 'package:permission_handler/permission_handler.dart';
 
 import 'global.dart';
@@ -28,7 +29,6 @@ gethead() {
   var cache = g('cache');
   var user = cache.get('user');
   if (null != user) {
-    
     return {'uid': user['uid'].toString(), 'token': user['token'].toString()};
   } else {
     return null;
@@ -49,4 +49,55 @@ Future requestPermission() async {
   // } else {
   //   print("权限申请通过");
   // }
+}
+
+//判断对象是否存在
+bool isnull(dynamic data, [String index]) {
+//  d(data);
+  if (null == data) {
+    return false;
+  }
+  if (data is String) {
+    //d('是string');
+    data = data.trim();
+    if ('null' == data) {
+      return false;
+    }
+    if ('' == data) {
+      return false;
+    }
+    if ('0' == data) {
+      return false;
+    }
+  }
+  if (data is int) {
+    if (0 == data) {
+      return false;
+    }
+  }
+  if (data is bool) {
+    return data;
+  }
+  // if ( data  is Object ) {
+  //    d('是Object');
+  //   return false;
+  // }
+  if (data is List) {
+    if (data.length == 0) {
+      return false;
+    }
+    // d('是List');
+  }
+  if (data is Map) {
+    if (data.isEmpty) {
+      return false;
+    }
+    if (null != index) {
+      return isnull(data['index']);
+    }
+    //d('是Map');
+
+  }
+  return true;
+  //
 }
